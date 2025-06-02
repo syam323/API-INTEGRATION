@@ -1,44 +1,68 @@
 # API-INTEGRATION
 COMPANY: CODTECH IT SOLUTIONS
+Intern Name: Nimmadi Syam
+Intern ID: CT08DF832
+Domain: Full Stack Web Development
+Duration: 8 Weeks
+Mentor: Neela Santhosh
 
-NAME: Nimmadi Syam
+📌 Project Description
+This project is a responsive weather web application that utilizes the OpenWeather API to provide real-time weather updates based on user input. Designed for both desktop and mobile users, the application ensures a seamless and interactive experience by dynamically fetching and displaying data without reloading the page.
 
-INTERN ID: CT08DF832
+🚀 Features
+🔄 Real-Time Weather Updates
+Fetches current weather data from public APIs.
 
-DOMAIN: Full Stack Web Development
+📱 Responsive Design
+Fully optimized for various screen sizes and devices.
 
-DURATION: 8 WEEKS
+⚡ Dynamic Content Rendering
+Updates the UI without refreshing the page.
 
-MENTOR: NEELA SANTHOSH
+🔌 API Integration
+Uses OpenWeatherMap for accurate weather forecasts.
 
-DISCRIPTION: 
+🧰 Technologies Used
+Technology	Purpose
+HTML5	Structure of the web application
+CSS3	Styling and layout (including responsiveness)
+JavaScript (Vanilla JS)	Logic, API calls, and dynamic DOM manipulation
+Fetch API	Fetches weather data from OpenWeather API
+OpenWeatherMap API	Provides real-time weather information
 
-A simple weather application using the openweather API.
+⚙️ How to Run the Project
+Visit https://openweathermap.org
 
-STEPS TO RUN THE CODE: 
-1. Go to https://openweathermap.org
-2. Create a free account
-3. Navigate to the API keys section
-4. Generate a key
-5. Copy that key to clipboard
-6. Insert that key into the required variable in the script.js file
-7. Enjoy!
+Sign up and create a free account
 
-Responsive API Data Web Application
+Go to your profile → API Keys
 
-Project Overview
+Generate and copy your API key
 
-This project is a responsive web application that fetches and displays data dynamically from a public API. It provides real-time updates for weather and other public data sources, ensuring a user-friendly experience on both desktop and mobile devices.
+Open the script.js file in the project folder
 
-Features
+Replace the placeholder key with your actual API key
 
-Fetches and displays real-time data from public APIs
+javascript
 
-Responsive design for seamless usability across devices
+const apiKey = "YOUR_API_KEY_HERE";
 
-Dynamically updates content without requiring page reloads
+Save the file and open index.html in your browser
 
-Backend integration for efficient data management
+✅ You're all set to enjoy real-time weather updates!
+
+
+📚 Learning Outcome
+
+Gained hands-on experience with API integration
+
+Learned responsive web design techniques
+
+Improved skills in frontend development using HTML, CSS, and JavaScript
+
+Understood the use of asynchronous programming (Fetch API)
+
+
 
 OUTPUT:
 
