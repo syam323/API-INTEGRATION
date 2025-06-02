@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="header-container">
+        <div class="header-title">
+            <h1>WEATHER INFO</h1>
+        </div>
+
+        
+        <div class="datetime" id="datetime">
+            Loading date and time...
+        </div>
+
+        
+        <div class="header-summary weather">
+            <p class="temp">____°C</p>
+            <p class="city">______</p>
+            <button><img src="./images/snow.png" alt="icon" /></button>
+        </div>
+    </div>
+
+    <div class="search">
+        <input type="text" placeholder="Enter your city name" spellcheck="false" />
+        <button><img src="./images/search.png" alt="search" /></button>
+    </div>
+
+    <div class="location-btn-container">
+        <button class="location-btn">
+            <img src="./images/location.png" alt="Current Location Icon" />
+            <span>Current Location</span>
+        </button>
+    </div>
+
+
+    <div class="weather-heading">
+        <img src="./images/weather-icon.png" alt="Weather Icon" />
+        <h2>Weather Highlights</h2>
+    </div>
+    <div class="metrics-container">
+        <div class="humidity-block">
+            <img src="./images/humidity.png" alt="Humidity Icon" />
+            <p class="humidity-value">Humidity: ----%</p>
+        </div>
+
+        <div class="windspeed-block">
+            <img src="./images/wind.png" alt="Wind Speed Icon" />
+            <p class="wind-value">Wind Speed: ---- m/s</p>
+        </div>
+
+        <div class="airquality-block">
+            <img src="./images/air.png" alt="Air Quality Icon" />
+            <p class="air-value">Air Quality: ----%</p>
+        </div>
+
+        <div class="pressure-block">
+            <img src="./images/pressure.png" alt="Pressure Icon" />
+            <p class="pressure-value">Pressure: ---- hPa</p>
+        </div>
+
+        <div class="visibility-block">
+            <img src="./images/visibility.png" alt="Visibility Icon" />
+            <p class="visibility-value">Visibility: ---- km</p>
+        </div>
+
+        <div class="dewpoint-block">
+            <img src="./images/dewpoint.png" alt="Dew Point Icon" />
+            <p class="dewpoint-value">Dew Point: ----°C</p>
+        </div>
+    </div>
+
+    <div class="weather">
+        <div class="sun-times">
+            <div class="time-box">
+                <img src="./images/sunrise.png" alt="sunrise icon" />
+                <p class="sunrise">Sunrise: _____</p>
+            </div>
+            <div class="time-box">
+                <img src="./images/sunset.png" alt="sunset icon" />
+                <p class="sunset">Sunset: _____</p>
+            </div>
+        </div>
+    </div>
+    <div id="invalid-popup" class="popup hidden">
+        <p>⚠️ Invalid city name. Please try again.</p>
+    </div>
+
+
+
+    <script>
+        const apiKey = "b9ede0baca9c3febf4ddc77c065fa0d5";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".search button");
+        const locationBtn = document.querySelector(".location-btn");
+
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById("datetime").innerHTML = now.toLocaleDateString("en-US", options);
+        }
+        function clearWeatherData() {
+            document.querySelector(".city").innerHTML = "______";
+            document.querySelector(".temp").innerHTML = "____°C";
+            document.querySelector(".humidity-value").innerHTML = "Humidity: --%";
+            document.querySelector(".wind-value").innerHTML = "Wind Speed: -- m/s";
+            document.querySelector(".pressure-value").innerHTML = "Pressure: -- hPa";
+            document.querySelector(".visibility-value").innerHTML = "Visibility: -- km";
+            document.querySelector(".dewpoint-value").innerHTML = "Dew Point: --°C";
+            document.querySelector(".sunrise").innerHTML = "Sunrise: --:--";
+            document.querySelector(".sunset").innerHTML = "Sunset: --:--";
+            document.querySelector(".air-value").textContent = "Air Quality: --";
+        }
+
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        async function checkWeather(city) {
+            try {
+                const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+
+                if (response.status === 404) {
+                    showInvalidPopup();
+                    clearWeatherData(); // Clear old data
+                    document.querySelector(".error").style.display = "block";
+                    return;
+                }
+
+
+                if (!response.ok) {
+                    console.error("Unexpected error:", response.status);
+                    document.querySelector(".error").style.display = "block";
+                    return;
+                }
+
+                const data = await response.json();
+                const { name, main, sys, wind, visibility, coord } = data;
+
+                // Air Quality API
+                const airResponse = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${coord.lat}&lon=${coord.lon}&appid=${apiKey}`);
+                const airData = await airResponse.json();
+                const aqi = airData.list[0].main.aqi;
+                const aqiText = ["Good", "Fair", "Moderate", "Poor", "Very Poor"];
+                document.querySelector(".air-value").textContent = "Air Quality: " + aqiText[aqi - 1];
+
+                // Set weather data
+                document.querySelector(".city").innerHTML = name || "______";
+                document.querySelector(".temp").innerHTML = main?.temp ? Math.round(main.temp) + "°C" : "____°C";
+                document.querySelector(".humidity-value").innerHTML = "Humidity: " + main.humidity + "%";
+                document.querySelector(".wind-value").innerHTML = "Wind Speed: " + wind.speed + " m/s";
+                document.querySelector(".pressure-value").innerHTML = "Pressure: " + main.pressure + " hPa";
+                document.querySelector(".visibility-value").innerHTML = "Visibility: " + (visibility / 1000).toFixed(1) + " km";
+
+                const dewPoint = calculateDewPoint(main.temp, main.humidity);
+                document.querySelector(".dewpoint-value").innerHTML = "Dew Point: " + dewPoint + "°C";
+
+                const sunrise = new Date(sys.sunrise * 1000).toLocaleTimeString();
+                const sunset = new Date(sys.sunset * 1000).toLocaleTimeString();
+                document.querySelector(".sunrise").innerHTML = "Sunrise: " + sunrise;
+                document.querySelector(".sunset").innerHTML = "Sunset: " + sunset;
+
+                document.querySelector(".error").style.display = "none";
+            } catch (error) {
+                console.error("Error fetching weather data:", error);
+                document.querySelector(".error").style.display = "block";
+
+                // Show popup only if city is likely invalid (based on message or failed response)
+                if (error.message.includes("city") || error.message.includes("404")) {
+                    showInvalidPopup();
+                    clearWeatherData();
+                
+                }
+            }
+        }
+
+
+        function calculateDewPoint(tempC, humidity) {
+            const a = 17.27;
+            const b = 237.7;
+            const alpha = ((a * tempC) / (b + tempC)) + Math.log(humidity / 100);
+            const dewPoint = (b * alpha) / (a - alpha);
+            return dewPoint.toFixed(1);
+        }
+
+        // ✅ Popup function
+        function showInvalidPopup() {
+            const popup = document.getElementById('invalid-popup');
+            popup.classList.remove('hidden');
+
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 3000);
+        }
+
+        searchBtn.addEventListener("click", () => {
+            const city = searchBox.value.trim();
+            if (city === "") {
+                showInvalidPopup();
+                return;
+            }
+            checkWeather(city);
+        });
+
+        locationBtn.addEventListener("click", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`);
+                    const data = await response.json();
+                    checkWeather(data.name);
+                });
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        });
+    </script>
+
+
+
+</body>
+
+</html>
