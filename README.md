@@ -13,10 +13,14 @@ Duration: 8 Weeks
 Mentor: Neela Santhosh
 
 
+
 📌 Project Description
+
 This project is a responsive weather web application that utilizes the OpenWeather API to provide real-time weather updates based on user input. Designed for both desktop and mobile users, the application ensures a seamless and interactive experience by dynamically fetching and displaying data without reloading the page.
 
+
 🚀 Features:
+
 
 🔄 Real-Time Weather Updates
 Fetches current weather data from public APIs.
@@ -30,46 +34,52 @@ Updates the UI without refreshing the page.
 🔌 API Integration
 Uses OpenWeatherMap for accurate weather forecasts.
 
+
 🧰 Technologies Used:
 
-  HTML5	Structure of the web application
 
-  CSS3	Styling and layout (including responsiveness)
+  1.HTML5	Structure of the web application
 
-  JavaScript (Vanilla JS)	Logic, API calls, and dynamic DOM manipulation
+  2.CSS	Styling and layout (including responsiveness)
 
-  Fetch API	Fetches weather data from OpenWeather API
+  3.JavaScript (Vanilla JS)	Logic, API calls, and dynamic DOM manipulation
 
-  OpenWeatherMap API	Provides real-time weather information
+  4.Fetch API	Fetches weather data from OpenWeather API
+
+  5.OpenWeatherMap API	Provides real-time weather information
+
+  
 
 ⚙️ How to Run the Project
 
-  Visit https://openweathermap.org
+  1.Visit https://openweathermap.org
 
-  Sign up and create a free account
+  2.Sign up and create a free account
 
-  Go to your profile → API Keys
+  3.Go to your profile → API Keys
 
-  Generate and copy your API key
+  4.Generate and copy your API key
 
-  Open the script.js file in the project folder
+  5.Open the script.js file in the project folder
 
-  Replace the placeholder key with your actual API key in javascript
+  6.Replace the placeholder key with your actual API key in javascript
 
-  Save the file and open index.html in your browser
+  7.Save the file and open index.html in your browser
 
 ✅ You're all set to enjoy real-time weather updates!
 
 
+
+
 📚 Learning Outcome
 
-  Gained hands-on experience with API integration
+  1.Gained hands-on experience with API integration
 
-  Learned responsive web design techniques
+  2.Learned responsive web design techniques
 
-  Improved skills in frontend development using HTML, CSS, and JavaScript
+  3.Improved skills in frontend development using HTML, CSS, and JavaScript
 
-  Understood the use of asynchronous programming (Fetch API)
+  4.Understood the use of asynchronous programming (Fetch API)
 
 
 
