@@ -42,5 +42,7 @@ Backend integration for efficient data management
 
 OUTPUT:
 
+![Image](https://github.com/user-attachments/assets/a2fddf76-73a1-465c-8f26-11a74bf83886)
+
 
 
